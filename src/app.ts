@@ -1,10 +1,14 @@
+import bodyParser from 'body-parser';
 import express, { Express, Request, Response } from 'express';
 import { Items } from './Contract/items';
-import { findAll, findById } from './Service/items.service';
+import { mockItems } from './Mock/mockItems';
+import { findAll, findById, Create,Delete,Update } from './Service/items.service';
 import { students } from './students';
 const app: Express = express();
 
 const port = process.env.PORT || 8000;
+
+app.use(bodyParser.urlencoded({extended:false}))
 
 app.get('/students', (req: Request, res: Response) => {
   res.status(200).json(students);
@@ -34,17 +38,55 @@ app.get('/items/:id', async (req: Request, res: Response) => {
     }
     res.status(200).json(item);
   } catch (error) {
-    res.status(500).send('Internal Error');
+   
   }
 });
 
 // POST /items
+app.post('/items', async (req: Request, res: Response) => {
+  
+  const newItem={
+    id:req.body.id,
+    title:req.body.title,
+    body:req.body.body
+    }
+  try {
+    const newitem=await Create(newItem)
+    res.status(200).json(newitem);
+  } catch (error) {
+     res.status(500).send('Internal Error');
+  }
+});
 
 // PUT /items/:id
+// Get the param from the path
+app.put('/items/:id', async (req: Request, res: Response) => {
+  
+  const id: number = Number(req.params.id);
+  const {title,body}=req.body;
+ 
+
+    
+  })
+  
+    // console.log(id);
+    // res.json(id)
+    
 
 // DELETE /items
 
-// DELETE /items/:id
+//DELETE /items/:id
+app.delete('/items/:id', async (req: Request, res: Response) => {
+  const id: number = Number(req.params.id);
+  try {
+     const deleteItem=await Delete(id)
+  res.status(200).json(deleteItem)
+  } catch (error) {
+    res.status(500).send('Internal Error');
+  }
+ 
+    
+});
 
 // Start server
 app.listen(port, () => {
