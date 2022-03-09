@@ -46,7 +46,7 @@ app.get('/items/:id', async (req: Request, res: Response) => {
 app.post('/items', async (req: Request, res: Response) => {
   
   const newItem={
-    id:req.body.id,
+    id:Math.floor(Math.random() * 1000),
     title:req.body.title,
     body:req.body.body
     }
@@ -58,14 +58,18 @@ app.post('/items', async (req: Request, res: Response) => {
   }
 });
 
-// PUT /items/:id
-// Get the param from the path
+//PUT /items/:id
+//Get the param from the path
 app.put('/items/:id', async (req: Request, res: Response) => {
   
   const id: number = Number(req.params.id);
-  const {title,body}=req.body;
- 
+  const updateitem=await Update(id,mockItems)
+  //const array=req.body
+  
+  res.status(200).json(updateitem)
 
+
+  //console.log(updateitem);
     
   })
   
@@ -76,16 +80,24 @@ app.put('/items/:id', async (req: Request, res: Response) => {
 // DELETE /items
 
 //DELETE /items/:id
+// app.delete('/items/:id', async (req: Request, res: Response) => {
+//   const id: number = Number(req.params.id);
+//   try {
+//      const Item=await Delete(id)
+//   res.status(200).json(Item)
+//   } catch (error) {
+//     res.status(500).send('Internal Error');
+//   } 
+// });
+
 app.delete('/items/:id', async (req: Request, res: Response) => {
   const id: number = Number(req.params.id);
   try {
-     const deleteItem=await Delete(id)
-  res.status(200).json(deleteItem)
+     const Item=await Delete(id)
+  res.status(200).json(Item)
   } catch (error) {
     res.status(500).send('Internal Error');
-  }
- 
-    
+  } 
 });
 
 // Start server

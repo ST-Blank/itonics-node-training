@@ -1,6 +1,4 @@
 import { mockItems } from '../Mock/mockItems';
-import express, { Request, Response } from 'express';
-import bodyParser from 'body-parser';
 import { Items } from '../Contract/items';
 
 // Get all items
@@ -21,21 +19,18 @@ mockItems.push(data)
 return Promise.resolve(data);
 }
 
-   export const Update=async(id:number, data:any)=>{
-     
+   export const Update=async(id:number,body:any)=>{
     const item= mockItems.find(item=>item.id==id)
-    
-      if(item){
-        const newItem=mockItems.map((item)=>{
-          
-            
-       })
-      }
-  
-   }
+    if(item){
+     mockItems[id-1]=body
+      return Promise.resolve(mockItems);
+      
+      
+    }
+  }
 
 
-export const Delete=async(id:number)=>{
+export const Delete=async(id:number)=>{  
   const Item= mockItems.find(item=>item.id==id)
   if(Item){
   const deleteItem=mockItems.filter((Item)=>Item.id!==id)
