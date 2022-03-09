@@ -1,5 +1,4 @@
 import { mockItems } from '../Mock/mockItems';
-import { Items } from '../Contract/items';
 
 // Get all items
 export const findAll = async () => {
@@ -22,10 +21,10 @@ return Promise.resolve(data);
    export const Update=async(id:number,body:any)=>{
     const item= mockItems.find(item=>item.id==id)
     if(item){
-     mockItems[id-1]=body
-      return Promise.resolve(mockItems);
-      
-      
+      item.id=id
+      item.title=body.title
+      item.body=body.body
+      return Promise.resolve(item);
     }
   }
 
