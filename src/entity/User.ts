@@ -1,22 +1,18 @@
 import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
 
-@Entity()
+@Entity('user')
 export class User {
-    isActive!: boolean;
-    save() {
-      throw new Error('Method not implemented.');
-    }
-
+    
     @PrimaryGeneratedColumn()
-    id!: number;
+    public id?: number;
 
     @Column()
-    firstName!: string;
+    public firstName!: string;
 
     @Column()
-    lastName!: string;
+   public lastName!: string;
 
     @Column()
-    age!: number;
+   public age!: number;
 
 }
