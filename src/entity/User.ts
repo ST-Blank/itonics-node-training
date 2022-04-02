@@ -1,10 +1,11 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from "typeorm";
+import { Photo } from "./Photo";
 
 @Entity('user')
 export class User {
     
-    @PrimaryGeneratedColumn()
-    public id?: number;
+    @PrimaryGeneratedColumn('uuid')
+    public id?: string;
 
     @Column()
     public firstName!: string;
@@ -15,4 +16,6 @@ export class User {
     @Column()
    public age!: number;
 
+   @OneToMany(()=>Photo,(photo)=>photo.user)
+   public photo!:Photo[]
 }

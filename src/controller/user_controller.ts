@@ -111,10 +111,9 @@ export class userController{
      try {
           const user=await this.userRepository.findOneOrFail(id);
      if(user){ 
-         user.firstName=req.body.firstName
-     user.lastName=req.body.lastName
-     user.age=req.body.age
-    const updateUser =await this.userRepository.save(user)
+         const insertUser:User=req.body;
+     const updatedUSer:User={...user, ...insertUser}
+    const updateUser =await this.userRepository.save(updatedUSer)
     return res.status(200).json(updateUser);
    }
      }

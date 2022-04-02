@@ -49,11 +49,15 @@ export const getItem=async(req: Request, res: Response) => {
   export const updateItemByid= async (req: Request, res: Response) => {
     try {
       const id: number = Number(req.params.id);
-    const upitem=req.body
-     const updateditem=await Update(id,upitem)
+      const item = await findById(id)
+      if(item){
+    const insertItem=req.body
+    const updatedItem={...item,...insertItem}
+     const updateditem=await Update(id,updatedItem)
     //const array=req.body
       //console.log(updateitem);
     res.status(200).json(updateditem)
+      }
     } catch (error) {
       res.status(500).send('internal error')
     }

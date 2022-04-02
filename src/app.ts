@@ -6,6 +6,8 @@ import items_router from './Router/item_routes'
 import students_router from './Router/student_routes'
 import {userController} from './controller/user_controller'
 import { User } from './entity/User';
+import { Photo } from './entity/Photo';
+import { photoController } from './controller/photo.controller';
 require('dotenv').config();
 
 const PORT = process.env.PORT || 5000;
@@ -13,6 +15,7 @@ const PORT = process.env.PORT || 5000;
 class Server {
   private app: Express;
   usercontroller!: userController;
+  photocontroller!:photoController;
 
   constructor() {
     this.app = express();
@@ -34,7 +37,7 @@ class Server {
       password: 'password',
       database: 'test',
       synchronize: true,
-      entities: [User]
+      entities: [User,Photo]
     });
 
   // .then(connection => {
@@ -53,8 +56,10 @@ class Server {
     this.app.use('/items',items_router);
 
     this.usercontroller = new userController();
+    this.photocontroller=new photoController();
 
     this.app.use('/users',this.usercontroller.getRouter());
+    this.app.use('/users',this.photocontroller.getRouter());
   }
 
   public start(): void {
